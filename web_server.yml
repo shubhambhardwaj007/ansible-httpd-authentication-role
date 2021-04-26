@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+          - name: "Installing httpd software"
+            package:
+                    name: "httpd"
+                    state: "present"
+          - name: "Deploying webpages"
+            copy:
+                    src: "index.html"
+                    dest: "/var/www/html/index.html"
+          - name: "Configuring httpd configuration files"
+            path: "/etc/httpd/conf/httpd.conf"
+            regexp: "AllowOverride None"
+            replace: "AllowOverride AuthConfig"
+          - name: "Starting web server services"
+            service:
+                    name: "httpd"
+                    state: "started"
+                    enabled: "yes"
